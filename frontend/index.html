@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable Website</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Welcome to Our Site</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li id="profileLink" style="display: none;"><a href="profile.html">Profile</a></li>
+                <li id="adminLink" style="display: none;"><a href="admin.html">Admin</a></li>
+                <li id="loginRegisterLink"><a href="login.html">Login/Register</a></li>
+                <li id="logoutLink" style="display: none;"><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section>
+        <h2>Latest Updates</h2>
+        <p>Welcome to our site! This is a simple demonstration platform with intentional security vulnerabilities.</p>
+        <div id="latestMessages"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Vulnerable Website</p>
+    </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        checkAuth();
+        fetch('http://localhost:3000/api/messages')
+            .then(response => response.json())
+            .then(data => {
+                const messagesDiv = document.getElementById('latestMessages');
+                if (data.status === 'success' && data.data.messages.length > 0) {
+                    const latest = data.data.messages.slice(0, 3);
+                    let html = '<h3>Latest Messages</h3>';
+
+                    latest.forEach(message => {
+                        html += `
+                <div class="message">
+                  <p>${message.content}</p>
+                  <small>Posted by: ${message.user ? message.user.username : 'Anonymous'}</small>
+                </div>
+              `;
+                    });
+
+                    messagesDiv.innerHTML = html;
+                } else {
+                    messagesDiv.innerHTML = '<p>No messages yet!</p>';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>

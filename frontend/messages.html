@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board - Vulnerable Website</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Message Board</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="messages.html">Messages</a></li>
+                <li id="profileLink" style="display: none;"><a href="profile.html">Profile</a></li>
+                <li id="adminLink" style="display: none;"><a href="admin.html">Admin</a></li>
+                <li id="loginRegisterLink"><a href="login.html">Login/Register</a></li>
+                <li id="logoutLink" style="display: none;"><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <div class="form-container">
+        <h2>Post a Message</h2>
+        <form id="messageForm">
+            <div class="form-group">
+                <label for="messageContent">Your Message:</label>
+                <textarea id="messageContent" name="content" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn">Post Message</button>
+        </form>
+        <div id="messageStatus" class="message"></div>
+    </div>
+
+    <h2>All Messages</h2>
+    <div id="messageList">
+        <div class="loading">Loading messages...</div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Vulnerable Website</p>
+    </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/messages.js"></script>
+</body>
+</html>
