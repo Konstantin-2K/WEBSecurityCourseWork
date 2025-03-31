@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
     loadMessages();
 
+    document.getElementById('messageList').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btn-delete')) {
+            const messageId = e.target.closest('.message-card').dataset.id;
+            handleDeleteMessage(messageId);
+        }
+    });
+
     function isTokenExpired(token) {
         try {
             const tokenParts = token.split('.');
@@ -48,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <span>Date: ${new Date(message.createdAt).toLocaleString()}</span>
               </div>
               <div class="message-actions">
-                <button class="btn btn-small btn-delete" onclick="deleteMessage('${message._id}')">Delete</button>
+                <button class="btn btn-small btn-delete">Delete</button>
               </div>
             </div>
           `;
@@ -93,10 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    window.deleteMessage = function (messageId) {
+    function handleDeleteMessage(messageId) {
         const token = localStorage.getItem('token');
         if (token && isTokenExpired(token)) {
-            // Token is expired, logout user
             logout();
             return;
         }
@@ -125,5 +131,5 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert(`Error: ${error.message}`);
                 });
         }
-    };
+    }
 });

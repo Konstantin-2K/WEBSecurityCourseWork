@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
     loadUsers();
 
+    document.getElementById('userList').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btn-delete')) {
+            const userId = e.target.closest('tr').dataset.id;
+            handleDeleteUser(userId);
+        }
+    });
+
     function isTokenExpired(token) {
         try {
             const tokenParts = token.split('.');
@@ -67,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <td>${user.isAdmin ? 'Yes' : 'No'}</td>
               <td>${new Date(user.createdAt).toLocaleDateString()}</td>
               <td>
-                <button class="btn btn-small btn-delete" onclick="deleteUser('${user._id}')">Delete</button>
+                <button class="btn btn-small btn-delete">Delete</button>
               </td>
             </tr>
           `;
@@ -84,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    window.deleteUser = function (userId) {
+    function handleDeleteUser(userId) {
         const token = localStorage.getItem('token');
         if (token && isTokenExpired(token)) {
             logout();
@@ -114,5 +121,5 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert(`Error: ${error.message}`);
                 });
         }
-    };
+    }
 });

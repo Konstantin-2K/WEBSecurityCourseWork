@@ -40,7 +40,9 @@
 <script src="js/auth.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        checkAuth();
+        setTimeout(() => {
+            checkAuth();
+        }, 0);
         fetch('http://localhost:3000/api/messages')
             .then(response => response.json())
             .then(data => {
